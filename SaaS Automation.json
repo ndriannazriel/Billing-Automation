@@ -1,0 +1,1226 @@
+{
+  "name": "SaaS Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        16,
+        1296
+      ],
+      "id": "258790c5-3b55-4b01-bea6-8d4017cb7ea9",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "HBlPEB77OauEEVjw",
+          "name": "GDrive - A"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Receipt Automation\nInsert bulk receipt into a folder and will send to the each of the customers gmail/CRM/whatsapp. ",
+        "height": 368,
+        "width": 2432
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        1184
+      ],
+      "id": "1b8aca09-c8fc-4723-a5a6-05b6c31ecc28",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "# Pabbly current workflow\n## IF trial\n1) Create customer (After checking the email)\n2) Create subscription\n\n\n## IF nontrial\n1) Create customer (After checking the email)\n2) Create subscription (Live)\n3) Create Paid invoice\n4) Create payment under transaction",
+        "height": 480,
+        "width": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        -368
+      ],
+      "id": "1780abf8-d89c-4c7a-a223-64029a742f2b",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Account Codes -> ID\nPLANS\nTrackerHero System - Apps & Dashboard ->\n1 Year - Outright Purchase ->\n3 Year ->\n2 Year ->\n1 Year ->\n\nSales Income\nPatrol -> 20\nMesraHR -> 49\n\nBank & Cash Account\nn8n bank -> 48\n\nterm id(2) -> 14 days(doesnt matter for cash sales)",
+        "height": 480,
+        "width": 848,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        800,
+        -368
+      ],
+      "id": "79ef07cc-a39b-415c-b017-efb4304213da",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        480,
+        1312
+      ],
+      "id": "fc02186b-ec32-4e3b-b977-f4bf254854c3",
+      "name": "Send a message",
+      "webhookId": "2a5f445b-33b8-4786-a7b1-0e530073d876",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "EwAO8SOpkD3LZNOk",
+          "name": "Tender Tracker"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        256,
+        1296
+      ],
+      "id": "b80527bc-ddf0-480a-9297-8b49a4826b1b",
+      "name": "Loop Over Items",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        704,
+        1312
+      ],
+      "id": "4ad8e1d3-c31d-42e7-bd34-f3f914ba8cfc",
+      "name": "Send message",
+      "webhookId": "4ccb2b9e-8623-4e71-9493-fa20d6456a18",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "01dExgn6lSAc7GPv",
+          "name": "WhatsApp account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "# Bukku current workflow\n1) Create customer (After checking the email)\n2) Create subscription\n3) IF invoice has already been created -> create new workflow",
+        "height": 320,
+        "width": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        496,
+        -208
+      ],
+      "id": "dde42fa0-9ac3-4572-ae28-163b103e4e03",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "pabbly-payment",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Pabbly Payment Trial(After trial expires)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        624
+      ],
+      "webhookId": "pabbly-payment-webhook"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "pabbly-payment-nontrial-payment-success",
+        "options": {}
+      },
+      "id": "e8c16332-99d1-4382-a297-19fd8e1f4523",
+      "name": "Pabbly Payment NonTrial(Terus bayar)1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        400
+      ],
+      "webhookId": "pabbly-payment-webhook"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bukku.my/sales/payments",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2RldnRlc3QyLmJ1a2t1Lm15L3NldHRpbmdzL2FwaSIsImlhdCI6MTc2Mjg0NTQ0NSwibmJmIjoxNzYyODQ1NDQ1LCJqdGkiOiJ5UXZtWHh1MXJrOUF5TDN0Iiwic3ViIjoiODkxMDQiLCJwcnYiOiIyOWZjOGNlNzRmNWMwZjkxNmNjYTc0YTg2NmJjOGUzMWZlMDY0ZDdhIn0.WRzgq2v8gsaHciEZN6QYGziHnOzTPCYwTCSkkcjK2_Y"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Company-Subdomain",
+              "value": "devtest2"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contact_id\": {{ $('Edit Fields2').item.json.contact.id }},\n  \"date\": \"{{ $now.toFormat(\"yyyy-MM-dd\") }}\",\n  \"currency_code\": \"MYR\",\n  \"exchange_rate\": 1,\n  \"amount\": {{ $('Extract Payment Data2').item.json.payment_amount }},\n  \"link_items\": [\n    {\n      \"target_transaction_id\": {{ $json.transaction.id }},\n      \"apply_amount\": {{ $('Edit Fields2').item.json.payment_amount }}\n    }\n  ],\n  \"description\": \"Payment for invoice {{ $json.transaction.file_name }}\",\n  \"remarks\": \"Thank you.\",\n  \"deposit_items\": [\n    {\n      \"account_id\": 47,\n      \"amount\": {{ $('Edit Fields2').item.json.payment_amount }}\n    }\n  ],\n  \"status\": \"ready\"\n}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "c38c5d3f-3eef-4d45-b6e5-3443b022affc",
+      "name": "Create Bukku Payment MesraHR1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2160,
+        608
+      ],
+      "notes": "HTTP Request node to fetch contacts from Bukku API. Requires API token authentication."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bukku.my/sales/invoices",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2RldnRlc3QyLmJ1a2t1Lm15L3NldHRpbmdzL2FwaSIsImlhdCI6MTc2Mjg0NTQ0NSwibmJmIjoxNzYyODQ1NDQ1LCJqdGkiOiJ5UXZtWHh1MXJrOUF5TDN0Iiwic3ViIjoiODkxMDQiLCJwcnYiOiIyOWZjOGNlNzRmNWMwZjkxNmNjYTc0YTg2NmJjOGUzMWZlMDY0ZDdhIn0.WRzgq2v8gsaHciEZN6QYGziHnOzTPCYwTCSkkcjK2_Y"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Company-Subdomain",
+              "value": "devtest2"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"payment_mode\": \"credit\",\n    \"contact_id\": {{ $json.contact.id }},\n    \"date\": \"{{ $now.toFormat(\"yyyy-MM-dd\") }}\",\n    \"currency_code\": \"MYR\",\n    \"exchange_rate\": 1,\n    \"show_shipping\": false,\n    \"tax_mode\": \"exclusive\",\n    \"form_items\": [\n      {\n        \"account_id\": 20,\n        \"description\": \"{{ $json.plan_name }}\",\n        \"service_date\": \"{{ $now.toFormat(\"yyyy-MM-dd\") }}\",\n        \"unit_price\": {{ $json.payment_amount }},\n        \"quantity\": 1,\n        \"discount\": \"0\"\n      }\n    ],\n    \"status\": \"ready\",\n    \"term_items\": [\n      {\n        \"term_id\": 2,\n        \"payment_due\": \"100%\"\n      }\n    ]\n  }",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "c923ea29-8fce-4b95-ab2e-26a841105281",
+      "name": "Create Bukku Invoice MesraHR1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1936,
+        608
+      ],
+      "notes": "HTTP Request node to fetch contacts from Bukku API. Requires API token authentication."
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "010d2048-1a19-41d8-872c-f8f43fdab51c",
+              "name": "contact.id",
+              "value": "={{ $json.contact.id }}",
+              "type": "number"
+            },
+            {
+              "id": "f80942bf-e1a5-4fe6-afa7-a385f8a7f8cf",
+              "name": "plan_name",
+              "value": "={{ $('Extract Payment Data2').item.json.plan_name }}",
+              "type": "string"
+            },
+            {
+              "id": "969d8c7c-e24d-4470-8aa5-5e44e440e193",
+              "name": "payment_amount_with_tax",
+              "value": "={{ $('Extract Payment Data2').item.json.payment_amount }}",
+              "type": "number"
+            },
+            {
+              "id": "5ae18757-9816-4106-a641-ea3b70b2b1ce",
+              "name": "invoice_id",
+              "value": "={{ $('Extract Payment Data2').item.json.invoice_id }}",
+              "type": "string"
+            },
+            {
+              "id": "82cfb2e8-b3de-482a-b548-591ad6ebd45c",
+              "name": "order_number",
+              "value": "={{ $('Extract Payment Data2').item.json.order_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1488,
+        400
+      ],
+      "id": "6e5630f6-c23a-4ecb-8104-9a8344e24229",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bukku.my/contacts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2RldnRlc3QzLmJ1a2t1Lm15L3NldHRpbmdzL2FwaSIsImlhdCI6MTc2Nzc1ODM5MSwibmJmIjoxNzY3NzU4MzkxLCJqdGkiOiJHYmZrS2hxWmFuUWtXS2N4Iiwic3ViIjoiOTcyNDEiLCJwcnYiOiIyOWZjOGNlNzRmNWMwZjkxNmNjYTc0YTg2NmJjOGUzMWZlMDY0ZDdhIn0.O2EMSTc4ioLsNRPVlTCpLwHZ4DuzLfvwwJRVDlOaEsQ"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Company-Subdomain",
+              "value": "devtest3"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"entity_type\": \"MALAYSIAN_COMPANY\",\n  \"legal_name\": \"{{ $('Extract Payment Data2').item.json.Display_name }}\",\n  \"other_name\": \"\",\n  \"reg_no_type\": \"\",\n  \"reg_no\": \"\",\n  \"tax_id_no\": \"\",\n  \"sst_reg_no\": \"\",\n  \"email\": \"{{ $('Extract Payment Data2').item.json.customer_email }}\",\n  \"phone_no\": \"\",\n  \"types\": [\n    \"customer\",\n    \"supplier\",\n    \"employee\"\n  ],\n  \"remarks\": \"This is a remarks for the new contact.\"\n}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "2cc4f0f8-fd14-49ed-8e86-85c905070830",
+      "name": "Create Bukku Contact1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1280,
+        480
+      ],
+      "notes": "HTTP Request node to fetch contacts from Bukku API. Requires API token authentication."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "512b5021-cde4-4d12-bcaa-3c78ea92b1bf",
+              "leftValue": "={{ $json.contact_id }}",
+              "rightValue": "[nulll]",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1024,
+        400
+      ],
+      "id": "d203c479-2451-43a8-bd07-d66da29402aa",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the customer email from the 'Extract Payment Data' node\n// We assume that node outputs one item, and we access its 'json' property\nconst targetEmail = $node[\"Extract Payment Data2\"].json.customer_email;\n//const targetDisplayName = $node[\"Extract Payment Data2\"].json.customer_Display_name;\n// Get the array of contacts from the current node's input\n// The input is an array with one item, so we use items[0]\nconst contactsList = items[0].json.contacts;\n\n// Find the matching contact object using the .find() array method\nconst matchedContact = contactsList.find(contact => contact.email === targetEmail);\n//const matchedContact2 = contactsList.find(contact => contact.email === targetDisplayName);\n\n// Check if a match was found\nif (matchedContact) {\n  // A contact was found.\n  // Return a new item with the matched contact's ID.\n  return [\n    {\n      json: {\n        contact_id: matchedContact.id,\n        matched_email: targetEmail\n      }\n    }\n  ];\n} else {\n  // No contact was found with that email.\n  // Return an item with a null ID so you can handle this case later.\n  return [\n    {\n      json: {\n        contact_id: null,\n        message: `No contact found with email: ${targetEmail}`\n      }\n    }\n  ];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        400
+      ],
+      "id": "b0e9b7fc-84d4-4f84-a8ec-8a858ac5e5be",
+      "name": "Get the id of same email/display name2"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.bukku.my/contacts/{{ $json.contact_id }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "page",
+              "value": "1"
+            },
+            {
+              "name": "per_page",
+              "value": "50"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2RldnRlc3QzLmJ1a2t1Lm15L3NldHRpbmdzL2FwaSIsImlhdCI6MTc2Nzc1ODM5MSwibmJmIjoxNzY3NzU4MzkxLCJqdGkiOiJHYmZrS2hxWmFuUWtXS2N4Iiwic3ViIjoiOTcyNDEiLCJwcnYiOiIyOWZjOGNlNzRmNWMwZjkxNmNjYTc0YTg2NmJjOGUzMWZlMDY0ZDdhIn0.O2EMSTc4ioLsNRPVlTCpLwHZ4DuzLfvwwJRVDlOaEsQ"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Company-Subdomain",
+              "value": "devtest3"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "1565624e-61b4-421b-b6e6-74e94cd49931",
+      "name": "Read Bukku Contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1280,
+        304
+      ],
+      "notes": "HTTP Request node to fetch contacts from Bukku API. Requires API token authentication."
+    },
+    {
+      "parameters": {
+        "url": "https://api.bukku.my/contacts",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "page",
+              "value": "1"
+            },
+            {
+              "name": "per_page",
+              "value": "50"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2RldnRlc3QzLmJ1a2t1Lm15L3NldHRpbmdzL2FwaSIsImlhdCI6MTc2Nzc1ODM5MSwibmJmIjoxNzY3NzU4MzkxLCJqdGkiOiJHYmZrS2hxWmFuUWtXS2N4Iiwic3ViIjoiOTcyNDEiLCJwcnYiOiIyOWZjOGNlNzRmNWMwZjkxNmNjYTc0YTg2NmJjOGUzMWZlMDY0ZDdhIn0.O2EMSTc4ioLsNRPVlTCpLwHZ4DuzLfvwwJRVDlOaEsQ"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Company-Subdomain",
+              "value": "devtest3"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "ff1f32a1-98d6-4a4c-b288-fa9fa81c2256",
+      "name": "Get Bukku Contacts1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        528,
+        400
+      ],
+      "notes": "HTTP Request node to fetch contacts from Bukku API. Requires API token authentication."
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "customer_email",
+              "name": "customer_email",
+              "type": "string",
+              "value": "={{ $json.body.data.subscription.email_id }}"
+            },
+            {
+              "id": "payment_amount",
+              "name": "payment_amount",
+              "type": "number",
+              "value": "={{ $json.body.data.invoice.amount }}"
+            },
+            {
+              "id": "payment_currency",
+              "name": "payment_currency",
+              "type": "string",
+              "value": "={{ $json.body.data.invoice.currency_code }}"
+            },
+            {
+              "id": "payment_id",
+              "name": "payment_method",
+              "type": "string",
+              "value": "={{ $json.body.data.payment_method }}"
+            },
+            {
+              "id": "38db0f20-78bd-43ec-9c24-6202ec93ff4c",
+              "name": "Display_name",
+              "value": "={{ $json.body.data.customer.first_name }} {{ $json.body.data.customer.last_name }}",
+              "type": "string"
+            },
+            {
+              "id": "954702cc-1f1f-46ac-b232-1a01dc30d1f2",
+              "name": "billing_address",
+              "value": "={{ $json.body.data.customer.billing_address }}",
+              "type": "object"
+            },
+            {
+              "id": "e13d1d02-a126-43c0-92f7-f30896245b68",
+              "name": "shipping_address",
+              "value": "={{ $json.body.data.customer.shipping_address }}",
+              "type": "object"
+            },
+            {
+              "id": "62175900-b690-48d5-84e4-72c486697860",
+              "name": "Trial Start",
+              "value": "={{ $json.body.data.starts_at }}",
+              "type": "string"
+            },
+            {
+              "id": "e86c032f-a20f-485e-86a8-d497b39fa123",
+              "name": "Trial End",
+              "value": "={{ $json.body.data.trial_expiry_date }}",
+              "type": "string"
+            },
+            {
+              "id": "2e6258e2-b951-4b06-a6a9-5e2e1f1a8de0",
+              "name": "plan_name",
+              "value": "={{ $json.body.data.subscription.plan.plan_name }}",
+              "type": "string"
+            },
+            {
+              "id": "3df2a492-a9bc-4609-8bb9-b8f0f7d876ee",
+              "name": "customer_id",
+              "value": "={{ $json.body.data.customer.id }}",
+              "type": "string"
+            },
+            {
+              "id": "a64857be-ec22-4ef8-bf3e-24824962dedc",
+              "name": "subcription_created_at",
+              "value": "={{ $json.body.data.createdAt }}",
+              "type": "string"
+            },
+            {
+              "id": "431bb28f-48eb-430d-9a13-5c3d7a74cd94",
+              "name": "invoice_id",
+              "value": "={{ $json.body.data.invoice.invoice_id }}",
+              "type": "string"
+            },
+            {
+              "id": "091d3bdc-b15e-49ca-b806-ae35bab594e5",
+              "name": "order_id",
+              "value": "={{ $json.body.data.invoice.order_number }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "55bf3c5e-4340-4cd9-b840-9f2e6a7042b4",
+      "name": "Extract Payment Data2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        288,
+        400
+      ],
+      "notes": "Extract payment data from Pabbly webhook. You'll need to adjust field paths based on actual Pabbly payload structure."
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "pabbly-payment-nontrial",
+        "options": {}
+      },
+      "id": "6de4f6e0-f3bf-44ca-9c68-be393fde2fea",
+      "name": "Pabbly Subcription Created NonTrial(Terus bayar)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        944
+      ],
+      "webhookId": "pabbly-payment-webhook"
+    },
+    {
+      "parameters": {
+        "content": "# Cash Sales (Activates once payment success)",
+        "height": 672,
+        "width": 2432,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        144
+      ],
+      "id": "af9f73dc-14f6-464f-a55c-621208d3f7c0",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# When a subscription is added",
+        "height": 336,
+        "width": 2432
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        832
+      ],
+      "id": "29468723-f772-46eb-bc02-7c6eec136496",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "customer_email",
+              "name": "customer_email",
+              "type": "string",
+              "value": "={{ $json.body.data.subscription.email_id }}"
+            },
+            {
+              "id": "payment_amount",
+              "name": "payment_amount",
+              "type": "number",
+              "value": "={{ $json.body.data.invoice.credit_note.charge_amount }}"
+            },
+            {
+              "id": "payment_currency",
+              "name": "payment_currency",
+              "type": "string",
+              "value": "={{ $json.body.data.invoice.currency_code }}"
+            },
+            {
+              "id": "payment_id",
+              "name": "payment_method",
+              "type": "string",
+              "value": "={{ $json.body.data.payment_method }}"
+            },
+            {
+              "id": "38db0f20-78bd-43ec-9c24-6202ec93ff4c",
+              "name": "Display_name",
+              "value": "={{ $json.body.data.customer.first_name }} {{ $json.body.data.customer.last_name }}",
+              "type": "string"
+            },
+            {
+              "id": "954702cc-1f1f-46ac-b232-1a01dc30d1f2",
+              "name": "billing_address",
+              "value": "={{ $json.body.data.customer.billing_address }}",
+              "type": "object"
+            },
+            {
+              "id": "e13d1d02-a126-43c0-92f7-f30896245b68",
+              "name": "shipping_address",
+              "value": "={{ $json.body.data.customer.shipping_address }}",
+              "type": "object"
+            },
+            {
+              "id": "62175900-b690-48d5-84e4-72c486697860",
+              "name": "Trial Start",
+              "value": "={{ $json.body.data.starts_at }}",
+              "type": "string"
+            },
+            {
+              "id": "e86c032f-a20f-485e-86a8-d497b39fa123",
+              "name": "Trial End",
+              "value": "={{ $json.body.data.trial_expiry_date }}",
+              "type": "string"
+            },
+            {
+              "id": "2e6258e2-b951-4b06-a6a9-5e2e1f1a8de0",
+              "name": "plan_name",
+              "value": "={{ $json.body.data.subscription.plan.plan_name }}",
+              "type": "string"
+            },
+            {
+              "id": "3df2a492-a9bc-4609-8bb9-b8f0f7d876ee",
+              "name": "customer_id",
+              "value": "={{ $json.body.data.customer.id }}",
+              "type": "string"
+            },
+            {
+              "id": "a64857be-ec22-4ef8-bf3e-24824962dedc",
+              "name": "subcription_created_at",
+              "value": "={{ $json.body.data.createdAt }}",
+              "type": "string"
+            },
+            {
+              "id": "431bb28f-48eb-430d-9a13-5c3d7a74cd94",
+              "name": "invoice_id",
+              "value": "={{ $json.body.data.invoice.invoice_id }}",
+              "type": "string"
+            },
+            {
+              "id": "091d3bdc-b15e-49ca-b806-ae35bab594e5",
+              "name": "order_id",
+              "value": "={{ $json.body.data.invoice.order_number }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4fdea98d-139c-4689-9d6a-48678cc384ed",
+      "name": "Extract Payment Data3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        624
+      ],
+      "notes": "Extract payment data from Pabbly webhook. You'll need to adjust field paths based on actual Pabbly payload structure."
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.plan_name }}",
+                    "rightValue": "TrackerHero System - Apps & Dashboard",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "50c5bc80-d858-4a79-8aec-5c3587235d63"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "TrackerHero System - Apps & Dashboard"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ad91e017-e359-41bb-b3d6-4c5fe3ffa3a8",
+                    "leftValue": "={{ $json.plan_name }}",
+                    "rightValue": "1 Year - Outright Purchase",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "1 Year - Outright Purchase"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e1a7b039-6286-48a6-8b73-098f96e35701",
+                    "leftValue": "={{ $json.plan_name }}",
+                    "rightValue": "3 Year",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "3 Year"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "88fe5aca-9a82-4d0d-934b-b6816893bb7f",
+                    "leftValue": "={{ $json.plan_name }}",
+                    "rightValue": "2 Year",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "2 Year"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2048924e-2fca-4b15-b9d2-fccb73000a7e",
+                    "leftValue": "={{ $json.plan_name }}",
+                    "rightValue": "1 Year",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "1 Year"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1680,
+        352
+      ],
+      "id": "2e7227e3-5f1b-43ea-ac1f-e189ca94d410",
+      "name": "PLANS"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bukku.my/sales/invoices",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2RldnRlc3QzLmJ1a2t1Lm15L3NldHRpbmdzL2FwaSIsImlhdCI6MTc2Nzc1ODM5MSwibmJmIjoxNzY3NzU4MzkxLCJqdGkiOiJHYmZrS2hxWmFuUWtXS2N4Iiwic3ViIjoiOTcyNDEiLCJwcnYiOiIyOWZjOGNlNzRmNWMwZjkxNmNjYTc0YTg2NmJjOGUzMWZlMDY0ZDdhIn0.O2EMSTc4ioLsNRPVlTCpLwHZ4DuzLfvwwJRVDlOaEsQ"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Company-Subdomain",
+              "value": "devtest3"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"payment_mode\": \"credit\",\n    \"number\": \"{{ $json.invoice_id }}\",\n    \"contact_id\": {{ $json.contact.id }},\n    \"date\": \"{{ $now.toFormat(\"yyyy-MM-dd\") }}\",\n    \"currency_code\": \"MYR\",\n    \"exchange_rate\": 1,\n    \"show_shipping\": false,\n    \"tax_mode\": \"exclusive\",\n    \"form_items\": [\n      {\n        \"account_id\": 20,\n        \"description\": \"{{ $json.plan_name }}\",\n        \"service_date\": \"{{ $now.toFormat(\"yyyy-MM-dd\") }}\",\n        \"unit_price\": {{ $json.payment_amount_with_tax }},\n        \"quantity\": 1,\n        \"discount\": \"0\"\n      }\n    ],\n    \"status\": \"ready\",\n    \"term_items\": [\n      {\n        \"term_id\": 2,\n        \"payment_due\": \"100%\"\n      }\n    ]\n  }",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "76c34e94-4cfb-40c6-a770-c00b1cefe92d",
+      "name": "CREATE INVOICE",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1936,
+        400
+      ],
+      "notes": "HTTP Request node to fetch contacts from Bukku API. Requires API token authentication."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bukku.my/sales/payments",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2RldnRlc3QzLmJ1a2t1Lm15L3NldHRpbmdzL2FwaSIsImlhdCI6MTc2Nzc1ODM5MSwibmJmIjoxNzY3NzU4MzkxLCJqdGkiOiJHYmZrS2hxWmFuUWtXS2N4Iiwic3ViIjoiOTcyNDEiLCJwcnYiOiIyOWZjOGNlNzRmNWMwZjkxNmNjYTc0YTg2NmJjOGUzMWZlMDY0ZDdhIn0.O2EMSTc4ioLsNRPVlTCpLwHZ4DuzLfvwwJRVDlOaEsQ"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Company-Subdomain",
+              "value": "devtest3"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contact_id\": {{ $json.transaction.contact_id }},\n  \"number\": \"{{ $('PLANS').item.json.order_number }}\",\n  \"date\": \"{{ $now.toFormat(\"yyyy-MM-dd\") }}\",\n  \"currency_code\": \"MYR\",\n  \"exchange_rate\": 1,\n  \"amount\": {{ $json.transaction.form_items[0].amount }},\n  \"link_items\": [\n    {\n      \"target_transaction_id\": {{ $json.transaction.id }},\n      \"apply_amount\": {{ $json.transaction.form_items[0].amount }}\n    }\n  ],\n  \"description\": \"Payment for invoice {{ $('PLANS').item.json.invoice_id }}\",\n  \"remarks\": \"Thank you.\",\n  \"deposit_items\": [\n    {\n      \"account_id\": 48,\n      \"amount\": {{ $json.transaction.form_items[0].amount }}\n    }\n  ],\n  \"status\": \"ready\"\n}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "f670bfd0-96db-4c66-b42e-b18cd61eb18c",
+      "name": "CREATE PAYMENT",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2160,
+        400
+      ],
+      "notes": "HTTP Request node to fetch contacts from Bukku API. Requires API token authentication."
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pabbly Payment Trial(After trial expires)": {
+      "main": [
+        []
+      ]
+    },
+    "Create Bukku Invoice MesraHR1": {
+      "main": [
+        [
+          {
+            "node": "Create Bukku Payment MesraHR1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "PLANS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Bukku Contact1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Read Bukku Contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Bukku Contact1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get the id of same email/display name2": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Bukku Contact": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Bukku Contacts1": {
+      "main": [
+        [
+          {
+            "node": "Get the id of same email/display name2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Payment Data2": {
+      "main": [
+        [
+          {
+            "node": "Get Bukku Contacts1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pabbly Payment NonTrial(Terus bayar)1": {
+      "main": [
+        [
+          {
+            "node": "Extract Payment Data2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pabbly Subcription Created NonTrial(Terus bayar)": {
+      "main": [
+        []
+      ]
+    },
+    "Extract Payment Data3": {
+      "main": [
+        []
+      ]
+    },
+    "PLANS": {
+      "main": [
+        [
+          {
+            "node": "CREATE INVOICE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CREATE INVOICE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CREATE INVOICE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CREATE INVOICE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CREATE INVOICE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CREATE INVOICE": {
+      "main": [
+        [
+          {
+            "node": "CREATE PAYMENT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {},
+  "versionId": "a077e7bc-463a-4997-b731-897e647a934b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e087cf0658b50964fc9be03d4ce6f43012cbc290bbcf2da0b4b4961cbf8408ce"
+  },
+  "id": "BafcOYWgseYJjrnn",
+  "tags": [
+    {
+      "updatedAt": "2025-08-19T07:50:36.292Z",
+      "createdAt": "2025-08-19T07:50:36.292Z",
+      "id": "hf2rlJ55BgFLhiHm",
+      "name": "Development"
+    }
+  ]
+}
